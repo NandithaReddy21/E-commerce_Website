@@ -4,6 +4,8 @@ A fully responsive and interactive front-end web application built using **HTML*
 
 # Live Demo
 
+https://nandithareddy21.github.io/E-commerce_Website/
+
 # Features
 
 - **Landing page** with featured products and newsletter section
