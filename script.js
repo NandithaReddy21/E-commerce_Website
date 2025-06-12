@@ -1,0 +1,464 @@
+// // Home page
+
+// // copyright
+// const year = document.querySelector("#year");
+// const thisYear = new Date().getFullYear();
+// year.setAttribute("datetime", thisYear);
+// year.textContent = thisYear;
+
+// const bar = document.querySelector(".mobile");
+// const nav = document.querySelector(".header__nav");
+// const close = document.querySelector("#close");
+
+// if (bar) { // check if bar is visible or not
+//     bar.addEventListener('click', () => {
+//         nav.classList.add('active');
+//     })
+// }
+
+// if (close) {
+//     close.addEventListener('click', () => {
+//         nav.classList.remove('active');
+//     })
+// }
+
+// // Shop Page
+
+
+// document.addEventListener("DOMContentLoaded", function() {
+//     const productCards = document.querySelectorAll(".main__pro");
+
+//     productCards.forEach((card) => {
+//         card.querySelector("a").addEventListener("click", function() {
+//             const product = {
+//                 image: card.getAttribute("data-img"),
+//                 title: card.getAttribute("data-title"),
+//                 price: card.getAttribute("data-price")
+//             };
+
+//             localStorage.setItem("selectProduct", JSON.stringify(product));
+//         });
+//     });
+
+//     //Add to cart (cart click icon)
+//     const addToCartButtons = document.querySelectorAll(".add-to-cart-btn");
+//     addToCartButtons.forEach((btn) => {
+//         btn.addEventListener("click", function(e) {
+//             e.stopPropagation();
+//             e.preventDefault();
+
+//             const card = btn.closest(".main__pro");
+//             const title = card.getAttribute("data-title");
+//             const price = card.getAttribute("data-price");
+//             const image = card.getAttribute("data-img");
+
+//             const item = {title, price, image, quantity: 1};
+
+//             let cart = JSON.parse(localStorage.getItem("cart")) || [];
+//             let existing = null;
+//             for(let i=0; i<cart.length; i++) {
+//                 if(cart[i].title === product.title) {
+//                     existing = cart[i];
+//                     break;
+//                 }
+//             }
+//             if(existing) {
+//                 existing.quantity += 1;
+//             } else {
+//                 cart.push(item);
+//             }
+
+//             localStorage.setItem("cart", JSON.stringify(cart));
+//             alert("Item added to cart!");
+//         });
+//     });
+// });
+
+// // Single Product Page
+
+// let mainImg = document.querySelector("#product-img");
+// let smallImg = document.querySelectorAll(".small-img");
+
+// if(mainImg && smallImg.length > 0) {
+//     smallImg.forEach((img, index) => {
+//         img.addEventListener("click", () => {
+//             mainImg.src = img.src;
+//         });
+//     });
+// }
+
+// // smallImg[0].addEventListener("click", () => {
+// //     mainImg.src = smallImg[0].src;
+// // })
+
+// // smallImg[1].addEventListener("click", () => {
+// //     mainImg.src = smallImg[1].src;
+// // })
+
+// // smallImg[2].addEventListener("click", () => {
+// //     mainImg.src = smallImg[2].src;
+// // })
+
+// // smallImg[3].addEventListener("click", () => {
+// //     mainImg.src = smallImg[3].src;
+// // })
+
+
+// document.addEventListener("DOMContentLoaded", function() {
+//     const storedProduct = localStorage.getItem("selectProduct");
+
+//     if(!storedProduct) {
+//         window.location.href="shop.html";
+//     }
+
+//     if(storedProduct) {
+//         const product = JSON.parse(storedProduct);
+
+//         const productImg = document.getElementById("product-img");
+//         const productTitle = document.getElementById("product-title");
+//         const productPrice = document.getElementById("product-price");
+
+//         if(productImg && productTitle && productPrice) {
+//             productImg.src = product.image;
+//             productImg.alt = product.title;
+//             productTitle.textContent = product.title;
+//             productPrice.innerHTML = `<span><i class="fa-solid fa-indian-rupee-sign"></i></span> ${product.price}`;
+//         }
+
+//         // Add to Cart from sproduct.html
+
+//         const addBtn = document.getElementById("add-to-cart-product");
+//         const qtyInput = document.getElementById("quantity");
+
+//         if(addBtn && qtyInput) {
+//             addBtn.addEventListener("click", () => {
+//                 const quantity = parseInt(qtyInput.value);
+//                 const item = {
+//                     title: product.title,
+//                     price: product.price,
+//                     image: product.image,
+//                     quantity: quantity
+//                 };
+
+//                 let cart = JSON.parse(localStorage.getItem("cart")) || [];
+//                 let existing = null;
+//                 for(let i=0; i<cart.length; i++) {
+//                     if(cart[i].title === title) {
+//                         existing = cart[i];
+//                         break;
+//                     }
+//                 }
+//                 if(existing) {
+//                     existing.quantity += quantity;
+//                 } else {
+//                     cart.push(item);
+//                 }
+
+//                 localStorage.setItem("cart", JSON.stringify(cart));
+//                 alert("Added to Cart!");
+//             });
+//         }
+        
+//     }
+
+// });
+
+// // Cart Page - render cart items dynamically
+
+// document.addEventListener("DOMContentLoaded", function() {
+//     const cartTable = document.getElementById("cart-body");
+
+//     if(cartTable) {
+//         let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+//         function updateCartHTML() {
+//             cartTable.innerHTML = "";
+
+//             cart.forEach((item, index) => {
+//                 const row = document.createElement("tr");
+//                 row.innerHTML = `
+//                     <td><i class="fa-solid fa-circle-xmark remove-item" data-index="${index}"></i></td>
+//                     <td><img src="${item.image}" alt="${item.title}" width="60"></td>
+//                     <td>${item.title}</td>
+//                     <td><h4><span><i class="fa-solid fa-indian-rupee-sign"></i></span> ${item.price}</h4></td>
+//                     <td><input type="number" min="1" value="${item.quantity}" class="cart-qty" data-index="${index}"></td>
+//                 `;
+//                 cartTable.appendChild(row);
+//             });
+
+//             updateTotal();
+//         }
+
+//         function updateTotal() {
+//             let total = 0;
+//             cart.forEach((item) => {
+//                 total += item.quantity * parseFloat(item.price);
+//             });
+
+//             const subTotalCell = document.querySelector(".sub-total table tr:nth-child(1) td:nth-child(2)");
+//             const totalCell = document.querySelector(".sub-total table tr:nth-child(3) td:nth-child(2)");
+
+//             if(subTotalCell && totalCell) {
+//                 subTotalCell.innerHTML = `<span><i class="fa-solid fa-indian-rupee-sign"></i></span> ${total}`;
+//                 totalCell.innerHTML =  `<strong><span><i class="fa-solid fa-indian-rupee-sign"></i></span> ${total}</strong>`;
+//             }
+//         }
+
+//         // Handle Remove
+
+//         cartTable.addEventListener("click", function(e) {
+//             if(e.target.classList.contains("remove-item")) {
+//                 const index = e.target.getAttribute("data-index");
+//                 cart.splice(index, 1);
+//                 localStorage.setItem("cart", JSON.stringify(cart));
+//                 updateCartHTML();
+
+//             }
+//         });
+
+//         //Handle Quantity Change 
+
+//         cartTable.addEventListener("input", function(e) {
+//             if(e.target.classList.contains("cart-qty")) {
+//                 const index = e.target.getAttribute("data-index");
+//                 const newQty = parseInt(e.target.value);
+//                 if (newQty >= 1) {
+//                     cart[index].quantity = newQty;
+//                     localStorage.setItem("cart", JSON.stringify(cart));
+//                     updateTotal();
+//                 }
+//             }
+//         });
+
+//         updateCartHTML();
+//     }
+// })
+
+document.addEventListener("DOMContentLoaded", function () {
+    // ---------- General ----------
+    const year = document.querySelector("#year");
+    const thisYear = new Date().getFullYear();
+    if (year) {
+        year.setAttribute("datetime", thisYear);
+        year.textContent = thisYear;
+    }
+
+    const bar = document.querySelector(".mobile");
+    const nav = document.querySelector(".header__nav");
+    const close = document.querySelector("#close");
+
+    if (bar) {
+        bar.addEventListener('click', () => nav.classList.add('active'));
+    }
+
+    if (close) {
+        close.addEventListener('click', () => nav.classList.remove('active'));
+    }
+
+    // ---------- Shop Page ----------
+    const productCards = document.querySelectorAll(".main__pro");
+
+    productCards.forEach((card) => {
+        card.querySelector("a").addEventListener("click", function () {
+            const product = {
+                id: card.getAttribute("data-id"),
+                image: card.getAttribute("data-img"),
+                title: card.getAttribute("data-title"),
+                price: card.getAttribute("data-price")
+            };
+            localStorage.setItem("selectProduct", JSON.stringify(product));
+            window.location.href = "sproduct.html";
+        });
+    });
+
+    const addToCartButtons = document.querySelectorAll(".add-to-cart-btn");
+    addToCartButtons.forEach((btn) => {
+        btn.addEventListener("click", function (e) {
+            e.stopPropagation();
+            e.preventDefault();
+
+            const card = btn.closest(".main__pro");
+            const id = card.getAttribute("data-id");
+            const title = card.getAttribute("data-title");
+            const price = card.getAttribute("data-price");
+            const image = card.getAttribute("data-img");
+
+            const item = { id, title, price, image, quantity: 1 };
+
+            let cart = JSON.parse(localStorage.getItem("cart")) || [];
+            let existing = cart.find(i => i.id === id);
+
+            if (existing) {
+                existing.quantity += 1;
+            } else {
+                cart.push(item);
+            }
+
+            localStorage.setItem("cart", JSON.stringify(cart));
+            alert("Item added to cart!");
+        });
+    });
+
+    // ---------- Single Product Page ----------
+    if (window.location.pathname.includes("sproduct.html")) {
+        const storedProduct = localStorage.getItem("selectProduct");
+
+        if (!storedProduct) {
+            window.location.href = "shop.html";
+            return;
+        }
+
+        const product = JSON.parse(storedProduct);
+
+        const productImg = document.getElementById("product-img");
+        const productTitle = document.getElementById("product-title");
+        const productPrice = document.getElementById("product-price");
+
+        if (productImg && productTitle && productPrice) {
+            productImg.src = product.image;
+            productImg.alt = product.title;
+            productTitle.textContent = product.title;
+            productPrice.innerHTML = `<span><i class="fa-solid fa-indian-rupee-sign"></i></span> ${product.price}`;
+        }
+
+        let mainImg = document.querySelector("#product-img");
+        let smallImg = document.querySelectorAll(".small-img");
+        smallImg.forEach(img => {
+            img.addEventListener("click", () => {
+                mainImg.src = img.src;
+            });
+        });
+
+
+        const addBtn = document.getElementById("add-to-cart-product");
+        const qtyInput = document.getElementById("quantity");
+
+        if (addBtn && qtyInput) {
+            addBtn.addEventListener("click", () => {
+                const quantity = parseInt(qtyInput.value);
+                const item = {
+                    id: product.id,
+                    title: product.title,
+                    price: product.price,
+                    image: product.image,
+                    quantity: quantity
+                };
+
+                let cart = JSON.parse(localStorage.getItem("cart")) || [];
+                let existing = cart.find(i => i.id === item.id);
+
+                if (existing) {
+                    existing.quantity += quantity;
+                } else {
+                    cart.push(item);
+                }
+
+                localStorage.setItem("cart", JSON.stringify(cart));
+                alert("Added to Cart!");
+            });
+        }
+    }
+
+    // ---------- Contact Page ----------
+
+    const form = document.querySelector(".message-form");
+    if(form) {
+        form.addEventListener("submit", (e) => {
+            e.preventDefault();
+            alert("Thanks for contacting us!");
+            form.reset();
+        });
+    }
+    
+
+
+
+    // ---------- Cart Page ----------
+    const cartTable = document.getElementById("cart-body");
+
+    if (cartTable) {
+        let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+        function updateCartHTML() {
+            cartTable.innerHTML = "";
+
+            cart.forEach((item, index) => {
+                const row = document.createElement("tr");
+                row.innerHTML = `
+                    <td><i class="fa-solid fa-circle-xmark remove-item" data-index="${index}"></i></td>
+                    <td><img src="${item.image}" alt="${item.title}" width="60"></td>
+                    <td>${item.title}</td>
+                    <td><h4><span><i class="fa-solid fa-indian-rupee-sign"></i></span> ${item.price}</h4></td>
+                    <td><input type="number" min="1" value="${item.quantity}" class="cart-qty" data-index="${index}"></td>
+                `;
+                cartTable.appendChild(row);
+            });
+
+            updateTotal();
+        }
+
+        function updateTotal() {
+            let total = 0;
+            cart.forEach(item => total += item.quantity * parseFloat(item.price));
+
+            const subTotalCell = document.querySelector(".sub-total table tr:nth-child(1) td:nth-child(2)");
+            const totalCell = document.querySelector(".sub-total table tr:nth-child(3) td:nth-child(2)");
+
+            if (subTotalCell && totalCell) {
+                subTotalCell.innerHTML = `<span><i class="fa-solid fa-indian-rupee-sign"></i></span> ${total}`;
+                totalCell.innerHTML = `<strong><span><i class="fa-solid fa-indian-rupee-sign"></i></span> ${total}</strong>`;
+            }
+        }
+
+        cartTable.addEventListener("click", function (e) {
+            if (e.target.classList.contains("remove-item")) {
+                const index = e.target.getAttribute("data-index");
+                cart.splice(index, 1);
+                localStorage.setItem("cart", JSON.stringify(cart));
+                updateCartHTML();
+            }
+        });
+
+        cartTable.addEventListener("input", function (e) {
+            if (e.target.classList.contains("cart-qty")) {
+                const index = e.target.getAttribute("data-index");
+                const newQty = parseInt(e.target.value);
+                if (newQty >= 1) {
+                    cart[index].quantity = newQty;
+                    localStorage.setItem("cart", JSON.stringify(cart));
+                    updateTotal();
+                }
+            }
+        });
+
+        updateCartHTML();
+    }
+
+
+    // ---------- Theme ----------
+
+    const toggleBtn = document.querySelector("#mode-toggle");
+    
+    // apply saved preference when page loads
+    const currentMode = localStorage.getItem("darkMode");
+    if(currentMode === "enabled") {
+        document.body.classList.add("dark-mode");
+        toggleBtn.innerHTML = `<i class="fa-solid fa-sun"></i>`;
+    } else {
+        toggleBtn.innerHTML = `<i class="fa-solid fa-moon"></i>`
+    }
+
+    // toggle dark mode and update localStorage
+    toggleBtn.addEventListener("click", () => {
+        document.body.classList.toggle("dark-mode");
+
+        const isDarkMode = document.body.classList.contains("dark-mode");
+        localStorage.setItem("darkMode", isDarkMode ? "enabled" : "disabled");
+        
+        if(isDarkMode) {
+            toggleBtn.innerHTML = `<i class="fa-solid fa-sun"></i>`;
+        } else {
+            toggleBtn.innerHTML = `<i class="fa-solid fa-moon"></i>`;
+        }
+    });
+});
