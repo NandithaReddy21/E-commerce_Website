@@ -111,7 +111,7 @@ button.white {
     position: relative;
 }
 
-.header__nav li a {
+.header__nav li a{
     text-decoration: none;
     font-size: 16px;
     font-weight: 600;
@@ -862,6 +862,86 @@ footer .copyright {
     opacity: 0.9;
 }
 
+/* SIGN UP */
+
+.signup-container {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #f2f2f2;
+}
+
+.signup-container div {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    width: 300px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.signup-container div h2 {
+    margin-bottom:10px;
+}
+
+.signup-container div label {
+    margin-top: 10px;
+    display: block;
+    font-size: 14px;
+}
+
+.signup-container div input {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border-radius: 8px;
+    outline: none;
+    border: 1px solid #333;
+}
+
+.signup-container div button {
+    width: 100%;
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #088178;
+    border: none;
+    outline: none;
+    color: #fff;
+    cursor: pointer;
+    border-radius: 5px;
+    font-weight: 600;
+}
+
+.signup-container div button:hover {
+    opacity: 0.9;
+}
+
+.signup-container div button:active {
+    opacity: 1;
+}
+
+.signup-container div p {
+    margin-top: 15px;
+    text-align: center;
+    font-size: 12px;
+    color: #333;
+}
+
+.signup-container div a {
+    color: #333;
+}
+
+.signup-container div a:hover {
+    opacity: 0.9;
+}
+
+#signup-message,
+#login-message {
+    color: red;
+    font-size: 16px;
+    text-align: center;
+}
+
 /* || CART PAGE */
 
 .cart-wrapper {
@@ -977,7 +1057,8 @@ footer .copyright {
     filter: brightness(0) invert(1);
 }
 
-.dark-mode .header__section {
+.dark-mode .header__section,
+.dark-mode .signup-container {
     background-color: #1b1b1b;
 }
 
@@ -1036,6 +1117,19 @@ footer .copyright {
     border-color: #444;
 }
 
+.dark-mode .signup-container div,
+.dark-mode .signup-container div p,
+.dark-mode .signup-container div a  {
+    background-color: #1e1e1e;
+    color: #e0e0e0;
+}
+
+.dark-mode .signup-container div input {
+    background-color: #2c2c2c;
+    color: #e0e0e0;
+}
+
+
 /* || MEDIA QUERIES */
 
 @media (max-width: 799px) {
@@ -1084,19 +1178,20 @@ footer .copyright {
 
     #close, #mode-toggle {
         display: initial;
-        font-size: 24px;
         color: #222;
-        position: absolute;
+        position: relative;
     }
 
     #close {
-        bottom: 245px;
+        bottom: 350px;
         text-decoration: none;
+        font-size: 30px;
     }
 
     #mode-toggle {
-        bottom: 220px;
-        left: 80px;
+        bottom: 295px;
+        left: 60px;
+        font-size: 24px;
     }
 
     #bag {
@@ -1169,7 +1264,14 @@ footer .copyright {
         padding: 40px 40px 0;
     }
 
-    /* Theme */
+    /* SIGN-UP PAGE */
+
+    .signup-container div {
+        width: 500px;
+        height: 400px;
+    }
+
+    /* THEME */
 
     .dark-mode .header__nav {
         background-color: #1b1b1b;
@@ -1293,6 +1395,13 @@ footer .copyright {
 
     .about-app video {
         width: 100%;
+    }
+
+
+    /* || SIGN-UP PAGE */
+
+    .signup-container div {
+        width: 300px;
     }
 
     /* || CART PAGE */
