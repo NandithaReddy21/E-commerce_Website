@@ -28,7 +28,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 id: card.getAttribute("data-id"),
                 image: card.getAttribute("data-img"),
                 title: card.getAttribute("data-title"),
-                price: card.getAttribute("data-price")
+                price: card.getAttribute("data-price"),
+                desc: card.getAttribute("data-desc")
             };
             localStorage.setItem("selectProduct", JSON.stringify(product));
             window.location.href = "sproduct.html";
@@ -77,12 +78,14 @@ document.addEventListener("DOMContentLoaded", function () {
         const productImg = document.getElementById("product-img");
         const productTitle = document.getElementById("product-title");
         const productPrice = document.getElementById("product-price");
+        const productDesc = document.getElementById("product-desc");
 
-        if (productImg && productTitle && productPrice) {
+        if (productImg && productTitle && productPrice && productDesc) {
             productImg.src = product.image;
             productImg.alt = product.title;
             productTitle.textContent = product.title;
             productPrice.innerHTML = `<span><i class="fa-solid fa-indian-rupee-sign"></i></span> ${product.price}`;
+            productDesc.textContent = product.desc || "No details available.";
         }
 
         let mainImg = document.querySelector("#product-img");
@@ -126,15 +129,76 @@ document.addEventListener("DOMContentLoaded", function () {
     // ---------- Contact Page ----------
 
     const form = document.querySelector(".message-form");
-    if(form) {
+    if (form) {
         form.addEventListener("submit", (e) => {
             e.preventDefault();
             alert("Thanks for contacting us!");
             form.reset();
         });
     }
-    
 
+    // ---------- General ----------
+
+    const signUpForm = document.querySelector("#signup-form");
+    if (signUpForm) {
+        signUpForm.addEventListener("submit", (e) => {
+            e.preventDefault();
+
+            const email = document.getElementById("signup-email").value.trim();
+            const password = document.getElementById("signup-password").value;
+            const confirmPassword = document.getElementById("confirm-password").value;
+            let msg = document.getElementById("signup-message");
+
+            if (password !== confirmPassword) {
+                msg.style.color = "red";
+                msg.textContent = "Passwords do not match";
+                return;
+            }
+
+            // Check if user already exists
+            if (localStorage.getItem(email)) {
+                msg.style.color = "red";
+                msg.textContent = "User already exists. Please log in instead.";
+                return;
+            }
+
+            localStorage.setItem(email, JSON.stringify({ password }));
+            msg.style.color = "green";
+            msg.textContent = "Sign up successful! Redirecting...";
+            setTimeout(() => {
+                window.location.href = "login.html";
+            }, 1500);
+        });
+    }
+
+
+    const loginForm = document.getElementById("login-form");
+    if (loginForm) {
+        loginForm.addEventListener("submit", (e) => {
+            e.preventDefault();
+
+            const email = document.getElementById("login-email").value.trim();
+            const password = document.getElementById("login-password").value;
+            let msg = document.getElementById("login-message");
+
+            const storedUser = JSON.parse(localStorage.getItem(email));
+
+            if(!storedUser || storedUser.password !== password) {
+                msg.style.color = "red";
+                msg.textContent = "Invalid email or password.";
+                return;
+            }
+
+            msg.style.color = "green";
+            msg.textContent = "Login successful! Redirecting..."
+            localStorage.setItem("isLoggedIn", "true");
+            localStorage.setItem("loggedInUser", email);
+
+            setTimeout(() => {
+                window.location.href = "index.html";
+            }, 1500);
+        });
+    }
 
 
     // ---------- Cart Page ----------
@@ -202,10 +266,10 @@ document.addEventListener("DOMContentLoaded", function () {
     // ---------- Theme ----------
 
     const toggleBtn = document.querySelector("#mode-toggle");
-    
+
     // apply saved preference when page loads
     const currentMode = localStorage.getItem("darkMode");
-    if(currentMode === "enabled") {
+    if (currentMode === "enabled") {
         document.body.classList.add("dark-mode");
         toggleBtn.innerHTML = `<i class="fa-solid fa-sun"></i>`;
     } else {
@@ -218,8 +282,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
         const isDarkMode = document.body.classList.contains("dark-mode");
         localStorage.setItem("darkMode", isDarkMode ? "enabled" : "disabled");
-        
-        if(isDarkMode) {
+
+        if (isDarkMode) {
             toggleBtn.innerHTML = `<i class="fa-solid fa-sun"></i>`;
         } else {
             toggleBtn.innerHTML = `<i class="fa-solid fa-moon"></i>`;
