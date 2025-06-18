@@ -662,16 +662,6 @@ footer .copyright {
     margin-right: 50px;
 }
 
-.main__prodetails .small-img-group {
-    display: flex;
-    justify-content: space-between;
-}
-
-.main__prodetails .small-img-col {
-    flex-basis: 24%;
-    cursor: pointer;
-}
-
 .main__prodetails .single-pro-details {
     width: 50%;
     padding-top: 30px;
