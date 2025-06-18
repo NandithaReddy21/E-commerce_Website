@@ -88,15 +88,6 @@ document.addEventListener("DOMContentLoaded", function () {
             productDesc.textContent = product.desc || "No details available.";
         }
 
-        let mainImg = document.querySelector("#product-img");
-        let smallImg = document.querySelectorAll(".small-img");
-        smallImg.forEach(img => {
-            img.addEventListener("click", () => {
-                mainImg.src = img.src;
-            });
-        });
-
-
         const addBtn = document.getElementById("add-to-cart-product");
         const qtyInput = document.getElementById("quantity");
 
